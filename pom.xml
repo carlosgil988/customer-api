@@ -60,6 +60,11 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>swagger-ui</artifactId>
+			<version>5.32.4</version>
+		</dependency>
 		<!-- OpenAPI / Swagger annotations -->
 		<dependency>
 			<groupId>io.swagger.core.v3</groupId>
@@ -101,7 +106,7 @@
 
 						<configuration>
 							<inputSpec>
-								${project.basedir}/resources/openapi.yml
+								${project.basedir}/src/main/resources/openapi.yml
 							</inputSpec>
 
 							<generatorName>spring</generatorName>
@@ -111,7 +116,7 @@
 								<openApiNullable>false</openApiNullable>
 							</configOptions>
 							<output>
-								${project.build.directory}/generated-sources/openapi
+								src/main/target/generated-sources/openapi
 							</output>
 
 							<apiPackage>
