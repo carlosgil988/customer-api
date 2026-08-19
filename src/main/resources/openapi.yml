@@ -55,6 +55,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerErrorNotFound'
+
+    patch:
+      summary: Modify a customer
+      description: Modifies a customer
+      operationId: modifyCustomer
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of customer
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdateRequest'
+      responses:
+        '200':
+          description: Customer updated correctly.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          description: Customer not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerErrorNotFound'
+        '409':
+          description: Customer email already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerErrorDuplicateEmail'
     delete:
       summary: Delete a customer by ID
       description: Deletes a customer by ID
@@ -144,3 +181,16 @@ components:
           type: string
           description: Error description
           example: "We can not create a customer with an existing email"
+    CustomerUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "María"
+        surname:
+          type: string
+          example: "Garcia"
+        email:
+          type: string
+          format: email
+          example: "maria.garcia@ejemplo.com"
