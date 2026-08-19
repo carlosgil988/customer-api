@@ -6,6 +6,30 @@ info:
   version: 1.0.0
 
 paths:
+  /customer:
+    post:
+      summary: Create a customer
+      description: Creates a customer
+      operationId: createCustomer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreateRequest'
+      responses:
+        '201':
+          description: Customer created correctly.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '409':
+          description: Customer email already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerErrorDuplicateEmail'
   /customer/{id}:
     get:
       summary: Obtain a customer by ID
@@ -75,7 +99,23 @@ components:
           type: string
           format: email
           example: "maria.garcia@ejemplo.com"
-
+    CustomerCreateRequest:
+      type: object
+      required:
+        - name
+        - surname
+        - email
+      properties:
+        name:
+          type: string
+          example: "María"
+        surname:
+          type: string
+          example: "Garcia"
+        email:
+          type: string
+          format: email
+          example: "maria.garcia@ejemplo.com"
     CustomerErrorNotFound:
       type: object
       required:
@@ -90,3 +130,17 @@ components:
           type: string
           description: Error description
           example: "Customer does not exist."
+    CustomerErrorDuplicateEmail:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Error code.
+          example: "CUSTOMER_ERROR_DUPLICATE_EMAIL"
+        message:
+          type: string
+          description: Error description
+          example: "We can not create a customer with an existing email"
