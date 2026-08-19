@@ -6,7 +6,7 @@ info:
   version: 1.0.0
 
 paths:
-  /customers/{id}:
+  /customer/{id}:
     get:
       summary: Obtain a customer by ID
       description: Retrieves a customer by ID
@@ -25,6 +25,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
+        '404':
+          description: Customer not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerErrorNotFound'
+    delete:
+      summary: Delete a customer by ID
+      description: Deletes a customer by ID
+      operationId: deleteCustomerById
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of customer
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Customer deleted correctly.
         '404':
           description: Customer not found.
           content:
